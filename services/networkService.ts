@@ -1,6 +1,6 @@
 
-import { NetworkStats, QualityLevel, NetworkInformation } from '../types';
-import { THRESHOLDS, EXPLANATIONS } from '../constants';
+import { NetworkStats, QualityLevel, NetworkInformation } from '../types.ts';
+import { THRESHOLDS, EXPLANATIONS } from '../constants.ts';
 
 /**
  * Measures latency by performing a lightweight fetch to a highly available endpoint.
@@ -8,7 +8,6 @@ import { THRESHOLDS, EXPLANATIONS } from '../constants';
 async function measureLatency(): Promise<number> {
   const start = performance.now();
   try {
-    // Using a reliable, high-availability endpoint for a HEAD request
     await fetch('https://www.google.com/generate_204', { mode: 'no-cors', method: 'HEAD', cache: 'no-store' });
     return Math.round(performance.now() - start);
   } catch (e) {
@@ -22,8 +21,6 @@ async function measureLatency(): Promise<number> {
 async function measureDownloadSpeed(): Promise<number> {
   const start = performance.now();
   try {
-    // We use a small image file from a fast CDN. 
-    // This is roughly 100KB which is enough for a quick burst estimate without draining user data.
     const response = await fetch('https://picsum.photos/400/400', { cache: 'no-store' });
     const blob = await response.blob();
     const end = performance.now();
@@ -32,7 +29,6 @@ async function measureDownloadSpeed(): Promise<number> {
     const speedMbps = (sizeBits / durationSec) / 1_000_000;
     return parseFloat(speedMbps.toFixed(2));
   } catch (e) {
-    // Fallback to navigator.connection if available
     const conn = (navigator as any).connection as NetworkInformation;
     return conn ? conn.downlink : 0;
   }

@@ -1,9 +1,9 @@
 
 import React, { useState, useEffect, useCallback } from 'react';
-import { getNetworkAnalysis } from './services/networkService';
-import { NetworkStats, QualityLevel } from './types';
-import { COLORS, ANALYSIS_INTERVAL } from './constants';
-import NetworkCard from './components/NetworkCard';
+import { getNetworkAnalysis } from './services/networkService.ts';
+import { NetworkStats, QualityLevel } from './types.ts';
+import { COLORS, ANALYSIS_INTERVAL } from './constants.ts';
+import NetworkCard from './components/NetworkCard.tsx';
 
 const App: React.FC = () => {
   const [stats, setStats] = useState<NetworkStats | null>(null);
@@ -24,7 +24,6 @@ const App: React.FC = () => {
     }
   }, []);
 
-  // Sync online status with browser events
   useEffect(() => {
     const handleOnline = () => setIsOnline(true);
     const handleOffline = () => setIsOnline(false);
@@ -38,13 +37,10 @@ const App: React.FC = () => {
     };
   }, []);
 
-  // Initial analysis
   useEffect(() => {
     runAnalysis();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [runAnalysis]);
 
-  // Countdown and Auto-refresh logic
   useEffect(() => {
     const timer = setInterval(() => {
       setTimeLeft((prev) => {
@@ -72,7 +68,6 @@ const App: React.FC = () => {
 
   return (
     <div className="min-h-screen p-4 md:p-8 flex flex-col max-w-6xl mx-auto">
-      {/* Header */}
       <header className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-10">
         <div>
           <h1 className="text-3xl font-black tracking-tighter text-white flex items-center gap-2">
@@ -104,7 +99,6 @@ const App: React.FC = () => {
         </div>
       )}
 
-      {/* Main Grid */}
       <main className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
         <NetworkCard
           title="Network Quality"
@@ -120,7 +114,7 @@ const App: React.FC = () => {
 
         <NetworkCard
           title="Download Speed"
-          value={stats?.downloadSpeed || 0}
+          value={stats?.downloadSpeed ?? 0}
           unit="Mbps"
           explanation="Measures how fast you can receive data from the web using a 100KB packet."
           accentColor={COLORS.PRIMARY}
@@ -133,7 +127,7 @@ const App: React.FC = () => {
 
         <NetworkCard
           title="Latency (Ping)"
-          value={stats?.latency || 0}
+          value={stats?.latency ?? 0}
           unit="ms"
           explanation="Network responsiveness. Lower values mean smoother real-time interactions."
           accentColor={COLORS.SUCCESS}
@@ -157,7 +151,6 @@ const App: React.FC = () => {
         />
       </main>
 
-      {/* Footer / Meta info */}
       <footer className="mt-auto py-10 flex flex-col md:flex-row items-center justify-between text-gray-500 text-xs gap-4 border-t border-white/5">
         <div className="flex flex-col gap-1">
           <p>© 2024 SpotNet Naija. All rights reserved.</p>
