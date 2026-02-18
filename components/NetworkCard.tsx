@@ -9,6 +9,7 @@ interface NetworkCardProps {
   explanation: string;
   icon?: React.ReactNode;
   accentColor?: string;
+  loading?: boolean;
 }
 
 const NetworkCard: React.FC<NetworkCardProps> = ({ 
@@ -17,31 +18,57 @@ const NetworkCard: React.FC<NetworkCardProps> = ({
   unit, 
   explanation, 
   icon, 
-  accentColor = COLORS.PRIMARY 
+  accentColor = COLORS.PRIMARY,
+  loading = false
 }) => {
   return (
-    <div className="bg-[#122647] rounded-2xl p-6 border border-white/5 shadow-xl transition-all hover:border-white/20">
-      <div className="flex items-center justify-between mb-4">
-        <h3 className="text-gray-400 text-sm font-medium tracking-wider uppercase">{title}</h3>
-        {icon && <div style={{ color: accentColor }}>{icon}</div>}
-      </div>
-      <div className="flex items-baseline gap-1 mb-2">
-        <span className="text-4xl font-bold tracking-tight text-white">{value}</span>
-        {unit && <span className="text-gray-500 font-medium text-lg">{unit}</span>}
-      </div>
-      <p className="text-gray-400 text-xs leading-relaxed">
-        {explanation}
-      </p>
+    <div className="glass group relative overflow-hidden rounded-2xl p-6 transition-all duration-500 hover:scale-[1.02] hover:shadow-[0_0_30px_rgba(59,130,246,0.1)]">
+      {/* Background Accent Glow */}
       <div 
-        className="h-1 w-full mt-4 rounded-full overflow-hidden bg-white/5"
-      >
-        <div 
-          className="h-full transition-all duration-1000" 
-          style={{ 
-            backgroundColor: accentColor,
-            width: '100%' 
-          }}
-        />
+        className="absolute -right-12 -top-12 h-32 w-32 rounded-full opacity-[0.03] transition-opacity group-hover:opacity-[0.07]"
+        style={{ backgroundColor: accentColor }}
+      />
+      
+      <div className="relative z-10">
+        <div className="mb-6 flex items-center justify-between">
+          <span className="text-[10px] font-black uppercase tracking-[0.2em] text-slate-500">
+            {title}
+          </span>
+          <div 
+            className="flex h-10 w-10 items-center justify-center rounded-xl bg-white/5 text-sm transition-colors group-hover:bg-white/10"
+            style={{ color: accentColor }}
+          >
+            {icon}
+          </div>
+        </div>
+
+        <div className="flex items-baseline gap-2">
+          <span className={`text-4xl font-bold tracking-tight transition-all duration-300 ${loading ? 'opacity-40 scale-95 blur-[2px]' : 'opacity-100 scale-100'}`}>
+            {value}
+          </span>
+          {unit && !loading && (
+            <span className="text-sm font-bold uppercase tracking-wider text-slate-500">
+              {unit}
+            </span>
+          )}
+        </div>
+
+        <div className="mt-4 flex flex-col gap-3">
+          <p className="min-h-[32px] text-[11px] leading-relaxed text-slate-400">
+            {explanation}
+          </p>
+          
+          <div className="relative h-1.5 w-full overflow-hidden rounded-full bg-white/5">
+            <div 
+              className={`absolute left-0 top-0 h-full rounded-full transition-all duration-1000 ease-out ${loading ? 'animate-pulse' : ''}`}
+              style={{ 
+                backgroundColor: accentColor,
+                width: loading ? '30%' : '100%',
+                boxShadow: `0 0 10px ${accentColor}80`
+              }}
+            />
+          </div>
+        </div>
       </div>
     </div>
   );

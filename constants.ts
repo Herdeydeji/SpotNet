@@ -1,27 +1,27 @@
 
-import { QualityLevel } from './types';
+import { QualityLevel } from './types.ts';
 
 export const COLORS = {
-  BACKGROUND: '#0B1D3A',
-  PRIMARY: '#2979FF',
-  SUCCESS: '#00C896',
-  WARNING: '#F59E0B',
-  DANGER: '#EF4444',
-  CARD_BG: 'rgba(255, 255, 255, 0.05)',
+  BACKGROUND: '#020617',
+  PRIMARY: '#3b82f6',    // Electric Blue
+  SUCCESS: '#10b981',    // Emerald
+  WARNING: '#f59e0b',    // Amber
+  DANGER: '#ef4444',     // Crimson
+  SLATE: '#1e293b',
 };
 
 export const THRESHOLDS = {
-  EXCELLENT: 20,
-  GOOD: 10,
-  WEAK: 3,
+  EXCELLENT: 25, // Higher bars for "Excellent"
+  GOOD: 12,
+  WEAK: 5,
 };
 
 export const EXPLANATIONS = {
-  [QualityLevel.EXCELLENT]: "Your internet is very fast. Video calls and streaming will work perfectly.",
-  [QualityLevel.GOOD]: "Your internet is stable and suitable for most online activities.",
-  [QualityLevel.WEAK]: "Your internet is slow. Some apps and videos may load slowly.",
-  [QualityLevel.VERY_WEAK]: "Your internet is very poor. Calls and browsing may not work properly.",
-  [QualityLevel.OFFLINE]: "No internet connection detected. Please check your router or mobile data."
+  [QualityLevel.EXCELLENT]: "Peak performance detected. Ultra-low latency suitable for 4K streaming and competitive gaming.",
+  [QualityLevel.GOOD]: "Stable connection verified. Reliable for HD conferencing and standard enterprise workflows.",
+  [QualityLevel.WEAK]: "Congestion or signal degradation detected. High-bandwidth applications may experience jitter.",
+  [QualityLevel.VERY_WEAK]: "Critical link instability. Expect packet loss and frequent connection timeouts.",
+  [QualityLevel.OFFLINE]: "Link terminated. Check hardware interface or carrier service status."
 };
 
-export const ANALYSIS_INTERVAL = 5; // Updated to 5 seconds as per request
+export const ANALYSIS_INTERVAL = 5; 
