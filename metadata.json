@@ -1,0 +1,7 @@
+{
+  "name": "SpotNet Naija",
+  "description": "An ultra-lightweight, telecom-grade network analysis dashboard designed for real-time monitoring of internet quality in Nigeria and beyond. Features automated 5-second checks for speed, latency, and stability.",
+  "requestFramePermissions": [
+    "geolocation"
+  ]
+}
